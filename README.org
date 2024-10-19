@@ -1,0 +1,23 @@
+#+TITLE: header-progress
+
+Header line based progress indicator for Emacs. This is not super extensible as
+of now but works.
+
+* Example Uses
+Here are a examples where I use this:
+
+1. Show static completion bar during org-present.
+2. Show static completion bar in org mode when I am writing.
+3. Show an indeterminate bar animation during a few async operations.
+
+* Installation
+...
+
+* Configuration
+...
+
+Static bar: Font, characters, leading marker. Try SVG.
+
+Text indicator: %age, x/y completion. Probably SVG tag.
+
+Indeterminate animation. Adding your own function.
