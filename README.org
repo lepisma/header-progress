@@ -1,4 +1,4 @@
-#+TITLE: header-progress
+#+TITLE: WIP header-progress
 
 Header line based progress indicator for Emacs. This is not super extensible as
 of now but works.
