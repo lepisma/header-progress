@@ -4,7 +4,7 @@ Header line based minimal progress indicators for Emacs.
 
 * Examples
 
-<>
+TODO: Screenshots <>
 
 <>
 
@@ -56,7 +56,15 @@ return bars that look something like this:
    presentations like via [[https://github.com/rlister/org-present][org-present]].
 3. ~hp-buffer-progress-bar-wide~: Similar to previous but computes buffer progress
    on the full buffer instead of narrowed region.
-4. ~hp-indeterminate-bar~: ...
+4. ~hp-indeterminate-bar~: For progress indication where point of completion is
+   unknown. See this example for usage:
+
+#+begin_src emacs-lisp
+  ;; Pregenerate the gradient patch for display
+  (setq hp-gradient-patch (generate-wrapping-gradient-patch "#6ad8ff" "#5856d6" 100))
+  (hp-bar-start #'hp-indeterminate-bar)
+  (hp-bar-finish)
+#+end_src
 
 You can, of course, make your own functions and substitute.
 
