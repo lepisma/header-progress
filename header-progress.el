@@ -4,7 +4,7 @@
 
 ;; Author: Abhinav Tushar <abhinav@lepisma.xyz>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "29"))
+;; Package-Requires: ((emacs "29") (s "1.13.0"))
 ;; Keywords:
 ;; URL: https://github.com/lepisma/header-progress.el
 
@@ -30,23 +30,58 @@
 
 ;;; Code:
 
-(defface header-progress-bar-complete-face
+(require 's)
+
+(defface hp-bar-complete-face
   '((t (:inherit font-lock-warning-face)))
   "Face for text that denotes completed portion of the progress bar.")
 
-(defface header-progress-bar-remaining-face
+(defface hp-bar-remaining-face
   '((t (:inherit font-lock-comment-face)))
   "Face for text that denotes incomplete portion of the progress bar.")
 
-(defun header-progress-build-string ()
-  (let* ((ratio (/ (float (line-number-at-pos)) (count-lines (point-min) (point-max))))
-         (total (window-width))
-         (complete (round (* ratio total))))
-    (concat (s-repeat complete (propertize "█" 'face 'header-progress-bar-complete-face))
-            (s-repeat (- total complete) (propertize "—" 'face 'header-progress-bar-remaining-face)))))e
+(defcustom hp-bar-complete-char "█"
+  "Character to display complete portion of the bar."
+  :type 'string)
 
-(setq header-line-format '(:eval (header-progress-build-string)))
-(setq header-line-format nil)
+(defcustom hp-bar-remaining-char "—"
+  "Character to display incomplete portion of the bar."
+  :type 'string)
+
+(defvar-local hp-last-bar nil
+  "Variable to hold the last bar before header progress kicked-in.
+
+This is used for restoring once the progress bar is finished.")
+
+(defvar-local hp-ratio 0
+  "Variable that can be set by programs to update header progress
+bar. It is a float between 0 to 1.")
+
+(defun hp--build-bar (ratio)
+  "Return a header bar string to show the given RATIO."
+  (let* ((total (window-width))
+         (complete (round (* ratio total))))
+    (concat (s-repeat complete (propertize hp-bar-complete-char 'face 'hp-bar-complete-face))
+            (s-repeat (- total complete) (propertize hp-bar-remaining-char 'face 'hp-bar-remaining-face)))))
+
+(defun hp-buffer-progress-bar ()
+  "Return progress bar string using the point's position in buffer."
+  (hp--build-bar (/ (float (line-number-at-pos)) (count-lines (point-min) (point-max)))))
+
+(defun hp-progress-bar ()
+  "Build a bar to show progress as indicated in the variable HEADER-PROGRESS-RATIO."
+  (hp--build-bar hp-ratio))
+
+(defun hp-bar-start (bar-function)
+  "Save the original header bar and initialize the header bar with
+given BAR-FUNCTION."
+  (setq hp-last-bar header-line-format)
+  (setq header-line-format `(:eval (,bar-function))))
+
+(defun hp-bar-finish ()
+  "Remove the progress bar and restore the original header bar used
+in the buffer."
+  (setq header-line-format hp-last-bar))
 
 (provide 'header-progress)
 

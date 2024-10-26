@@ -1,10 +1,14 @@
-#+TITLE: WIP header-progress
+#+TITLE: header-progress
 
-Header line based progress indicator for Emacs. This is not super extensible as
-of now but works.
+Header line based minimal progress indicators for Emacs.
 
-* Example Uses
-Here are a examples where I use this:
+* Examples
+
+<>
+
+<>
+
+Here are a few examples where I use this:
 
 1. Show static completion bar during org-present.
 2. Show static completion bar in org mode when I am writing.
@@ -12,13 +16,53 @@ Here are a examples where I use this:
 4. During speech recording
 
 * Installation
-...
+#+begin_src emacs-lisp
+  (use-package header-progress
+    :vc (:fetcher github :repo lepisma/header-progress))
+#+end_src
 
-* Configuration
-...
+* Usage
+The core construct here is the idea of a /bar function/ that returns a string
+depicting progress of any kind which can be used like the following:
 
-Static bar: Font, characters, leading marker. Try SVG.
+#+begin_src emacs-lisp
+  ;; To start displaying the progress bar
+  (hp-bar-start #'bar-function)
 
-Text indicator: %age, x/y completion. Probably SVG tag.
+  ;; Do work
 
-Indeterminate animation. Adding your own function.
+  ;; Once the work is done (or the need of bar is over), call
+  (hp-bar-finish)
+#+end_src
+
+** Bar Functions
+A bar function has to return string that directly gets set as
+~header-line-format~. The call to this function is managed by Emacs whenever it
+decides to update the bar. This might not give you extremely precise control but
+in has worked for me in practice.
+
+There are the following bar functions available in the package as of now. Both
+return bars that look something like this:
+
+#+begin_src shell
+█████████——————————
+#+end_src
+
+1. ~hp-progress-bar~: This is a general bar that uses the current value of
+   ~hp-ratio~ to update the bar. Since the header line is not updated in tightly
+   running lisp code, you might get more mileage from this in async programs.
+2. ~hp-buffer-progress-bar~: This displays position in buffer. This respects
+   narrowing so you might not get what you want when using this in org based
+   presentations like via [[https://github.com/rlister/org-present][org-present]]. For disregarding narrowing, set
+   ~hp-buffer-progress-respect-narrowing~ to ~nil~.
+3. ~hp-indeterminate-bar~: ...
+
+You can, of course, make your own functions and substitute.
+
+*** Customizing
+The looks of bars can be customized by tweaking the following:
+
+- ~hp-bar-complete-face~
+- ~hp-bar-remaining-face~
+- ~hp-bar-complete-char~
+- ~hp-bar-remaining-char~
