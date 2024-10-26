@@ -53,9 +53,10 @@ return bars that look something like this:
    running lisp code, you might get more mileage from this in async programs.
 2. ~hp-buffer-progress-bar~: This displays position in buffer. This respects
    narrowing so you might not get what you want when using this in org based
-   presentations like via [[https://github.com/rlister/org-present][org-present]]. For disregarding narrowing, set
-   ~hp-buffer-progress-respect-narrowing~ to ~nil~.
-3. ~hp-indeterminate-bar~: ...
+   presentations like via [[https://github.com/rlister/org-present][org-present]].
+3. ~hp-buffer-progress-bar-wide~: Similar to previous but computes buffer progress
+   on the full buffer instead of narrowed region.
+4. ~hp-indeterminate-bar~: ...
 
 You can, of course, make your own functions and substitute.
 

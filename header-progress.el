@@ -68,6 +68,10 @@ bar. It is a float between 0 to 1.")
   "Return progress bar string using the point's position in buffer."
   (hp--build-bar (/ (float (line-number-at-pos)) (count-lines (point-min) (point-max)))))
 
+(defun hp-buffer-progress-bar-wide ()
+  "Similar to `hp-buffer-progress-bar' but ignores any narrowing in effect."
+  (hp--build-bar (/ (float (line-number-at-pos nil t) (count-lines 1 (+ 1 (buffer-size)))))))
+
 (defun hp-progress-bar ()
   "Build a bar to show progress as indicated in the variable HEADER-PROGRESS-RATIO."
   (hp--build-bar hp-ratio))
