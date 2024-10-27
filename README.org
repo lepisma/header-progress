@@ -1,19 +1,7 @@
 #+TITLE: header-progress
 
-Header line based minimal progress indicators for Emacs.
-
-* Examples
-
-TODO: Screenshots <>
-
-<>
-
-Here are a few examples where I use this:
-
-1. Show static completion bar during org-present.
-2. Show static completion bar in org mode when I am writing.
-3. Show an indeterminate bar animation during a few async operations.
-4. During speech recording
+Header line based minimal progress indicators for Emacs. See this [[https://lepisma.xyz/journal/2024/10/27/header-progress-bar/index.html][blog post]] for
+screen casts.
 
 * Installation
 #+begin_src emacs-lisp
