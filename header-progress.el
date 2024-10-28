@@ -92,7 +92,7 @@ effect."
          (b2 (nth 2 (color-values color2)))
          (vector (make-vector cycle-length nil)))
     (dotimes (j cycle-length)
-      (let* ((factor (/ (+ 1 (sin (* 2 pi (/ j (float cycle-length))))) 2))
+      (let* ((factor (/ (+ 1 (sin (* 2 float-pi (/ j (float cycle-length))))) 2))
              (r (+ r1 (* factor (- r2 r1))))
              (g (+ g1 (* factor (- g2 g1))))
              (b (+ b1 (* factor (- b2 b1))))
