@@ -3,7 +3,7 @@
 ;; Copyright (c) 2024 Abhinav Tushar
 
 ;; Author: Abhinav Tushar <abhinav@lepisma.xyz>
-;; Version: 0.0.1
+;; Version: 0.1.0
 ;; Package-Requires: ((emacs "29") (s "1.13.0"))
 ;; Keywords:
 ;; URL: https://github.com/lepisma/header-progress.el
