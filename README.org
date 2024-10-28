@@ -23,6 +23,9 @@ depicting progress of any kind which can be used like the following:
   (hp-bar-finish)
 #+end_src
 
+Since buffer progress indication is a common use case, we also provide a minor
+mode for that ~hp-buffer-progress-mode~.
+
 ** Bar Functions
 A bar function has to return string that directly gets set as
 ~header-line-format~. The call to this function is managed by Emacs whenever it

@@ -130,6 +130,15 @@ given BAR-FUNCTION."
 in the buffer."
   (setq header-line-format hp-last-bar))
 
+(define-minor-mode hp-buffer-progress-mode
+  "Minor mode to show buffer progress in using header line.
+
+This uses the widened buffer."
+  :global nil
+  (if hp-buffer-progress-mode
+      (hp-bar-start #'hp-buffer-progress-bar-wide)
+    (hp-bar-finish)))
+
 (provide 'header-progress)
 
 ;;; header-progress.el ends here
